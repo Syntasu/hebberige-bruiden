@@ -1,11 +1,48 @@
-﻿@backgroundColor: #fcedd1;
-@backgroundContentColor: white;
+﻿@bodyColor: #fcedd1;
+
+@contentColor: #fcf5ea;
+@contentBorderColor: #f2d8af;
 
 body 
 {
-    margin: 0;
-    padding: 0;
-    width: 100%;
+    background-color: @bodyColor;
+}
+
+html, body
+{
     height: 100%;
-    background-color: @backgroundColor;
+}
+
+#content {
+    padding: 0;
+    height: 100%;
+    background-color: @contentColor;
+
+    border-style: solid;
+    border-width: 0px 10px 0px 10px;
+    border-color: @contentBorderColor;
+}
+
+.fill {
+    min-height: 100%;
+    height: 100%;
+}
+
+/*Banner!*/
+#banner {
+    padding: 0;
+    height: 200px;
+
+    background-image: url("../Assets/banner.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+
+    h1
+    {
+        color: #ffa200;
+        font-weight: lighter;
+        padding-top: 70px;
+        background-color: rgba(0,0,0,0.5);
+    }
 }

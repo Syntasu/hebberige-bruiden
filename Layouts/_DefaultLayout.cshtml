@@ -5,8 +5,20 @@
     </head>
 
     <body>
-        <div id="content" class="container">
+        @{
+            string[] classes =
+            {
+                "container",
+                "fill",
+                 "col-lg-" + Page.ContentWidth,
+            };
+        }
+        <div id="content" class="@String.Join(" ", classes)">
+
+            @RenderPage("~/Partials/_Banner.cshtml")
+
             @RenderBody()
         </div>
     </body>
 </html>
+
