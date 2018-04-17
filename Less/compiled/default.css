@@ -1,6 +1,14 @@
 body {
   background-color: #fcedd1;
 }
+body h1,
+body h2,
+body h3,
+body h4,
+body h5,
+body p {
+  font-family: 'Dosis', sans-serif;
+}
 html,
 body {
   height: 100%;
