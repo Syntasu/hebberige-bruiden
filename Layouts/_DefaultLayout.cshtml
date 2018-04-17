@@ -10,12 +10,14 @@
             {
                 "container",
                 "fill",
-                 "col-lg-" + Page.ContentWidth,
+                 "col-xs-" + Page.ContentWidth,
             };
         }
         <div id="content" class="@String.Join(" ", classes)">
 
             @RenderPage("~/Partials/_Banner.cshtml")
+            @RenderPage("~/Partials/_Navbar.cshtml")
+
 
             @RenderBody()
         </div>

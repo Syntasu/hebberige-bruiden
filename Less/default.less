@@ -1,7 +1,9 @@
 ﻿@bodyColor: #fcedd1;
 
-@contentColor: #fcf5ea;
+@contentColor: #fff0d7;
 @contentBorderColor: #f2d8af;
+
+@headerTextColor: #ffa200;
 
 body {
     background-color: @bodyColor;
@@ -33,7 +35,8 @@ html, body
 }
 
 /*Banner!*/
-#banner {
+#banner 
+{
     padding: 0;
     height: 200px;
 
@@ -44,9 +47,31 @@ html, body
 
     h1
     {
-        color: #ffa200;
+        color: @headerTextColor;
         font-weight: lighter;
         padding-top: 70px;
         background-color: rgba(0,0,0,0.5);
+    }
+}
+
+
+nav {
+    background-color: @contentBorderColor !important;
+
+    .nav-link {
+        color: black !important;
+    }
+
+    .nav-link:hover {
+        color: @headerTextColor !important;
+    }
+
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+    }
+
+    .nav-links
+    {
+        min-width: 94px;
     }
 }
