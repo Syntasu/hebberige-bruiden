@@ -3,17 +3,26 @@
         <h2> Wishlist code </h2>
     </div>
 
-    <br/>
+    <div class="row">
+        <p> 
+            Under this text is your wishlist code or the code of the wishlist you are visiting. <br/>
+            You can enter the code of the wishlist you wish to visit!
+        </p>
+    </div>
 
     <div id="#code" class="row">
 
-        @{ 
-            string code =  Page.HasWishlist ? Page.WishlistCode : "????????";
+        @{
+
+            string code = Page.HasWishlist ? Page.WishlistCode : "????????";
         }
 
-        <input id="code-input" class="form-control" type="text" value="@code"/>
- 
-        @if(!Page.HasWishlist)
+        <form method="get" class="col-md-12">
+            <input name="wl" id="code-input" class="form-control" type="text" value="@code" maxlength="8"/>'
+            <button id="code-btn" class="btn btn-success" type="submit">Visit</button>
+        </form>
+
+        @if (!Page.HasWishlist)
         {
             <p id="code-txt"> Click the create button to make a new wishlist!</p>
             <a id="code-btn" href="~/CreateWishlist.cshtml" class="btn btn-large btn-success">Create!</a>

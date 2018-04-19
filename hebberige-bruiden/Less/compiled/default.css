@@ -92,3 +92,14 @@ nav .navbar-toggler-icon {
   padding: 0;
   width: 100%;
 }
+#collapsed-menu {
+  display: none;
+}
+#collapsed-menu-items {
+  display: none;
+}
+@media screen and (max-width: 767px) {
+  #collapsed-menu {
+    display: block;
+  }
+}

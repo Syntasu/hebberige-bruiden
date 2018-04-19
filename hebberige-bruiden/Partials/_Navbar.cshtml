@@ -10,7 +10,7 @@
 
 <nav class="navbar navbar-expand-md ">
 
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0">
         <ul class="navbar-nav mr-auto">
 
             @foreach (NavLink link in navigationLinks)
@@ -43,13 +43,30 @@
         </ul>
     </div>
 
-    <div class="mx-auto order-0">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+    <div id="collapsed-menu" class="mx-auto order-0">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" onclick="toggleMenu()">
             <i class="fas fa-align-justify"></i>
         </button>
+
+        <div id="collapsed-menu-items">
+            <ul class="navbar-nav ml-auto">
+                @foreach (NavLink link in navigationLinks)
+                {
+                    if (link.ShouldShow(Authenication.LoggedIn))
+                    {
+                        <li class="nav-item nav-links">
+                            <a class="nav-link" href="@link.Href" align="center">
+                                <i class="fas @link.Icon"></i>
+                                @link.Name
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
     </div>
 
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+    <div class="navbar-collapse collapse w-100 order-3">
         <ul class="navbar-nav ml-auto">
 
            @foreach (NavLink link in navigationLinks)

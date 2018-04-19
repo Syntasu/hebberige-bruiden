@@ -7,27 +7,45 @@
 <!-- Include the default css for all pages.-->
 <link rel="stylesheet" href="@Href("~/Stylesheets/default.css")" />
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<!---->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js"></script>
+
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
 
+<script src="~/Scripts/nav.js">
 
 @{
     //Include any stylesheets that are specific to that page.
     //Page title serves are identifier.
     string pageTitle = Page.Title;
     string pageTitleNoWhitespaces = pageTitle.Replace(" ", "");
-    string normalizeName = pageTitleNoWhitespaces.ToLower() + ".css";
+    string normalizeName = pageTitleNoWhitespaces.ToLower();
+    string cssName = normalizeName + ".css";
+    string jsName = normalizeName + ".js";
 
     string stylesheetDirectory = "~/Stylesheets";
 
-    string serverPath = Server.MapPath(stylesheetDirectory);
-    string localPath = Path.Combine(stylesheetDirectory, normalizeName);
-    string path = Path.Combine(serverPath, normalizeName);
+    string styleSheetServerDir = Server.MapPath(stylesheetDirectory);
+    string styleSheetLocalDir = Path.Combine(stylesheetDirectory, cssName);
+    string styleSheetFile = Path.Combine(styleSheetServerDir, cssName);
 
-    if (File.Exists(path))
+    if (File.Exists(styleSheetFile))
     {
-        <link rel="stylesheet" href="@Href(localPath)" />
+        <link rel="stylesheet" href="@Href(styleSheetLocalDir)" />
+    }
+
+    //Include any javascripts
+    string jsDirectory = "~/Scripts";
+
+    string jsServerDir = Server.MapPath(jsDirectory);
+    string jsLocalDir = Path.Combine(jsDirectory, jsName);
+    string jsFile = Path.Combine(jsServerDir, jsName);
+
+    if (File.Exists(styleSheetFile))
+    {
+        <script src="@Href(jsLocalDir)"></script>
     }
 }

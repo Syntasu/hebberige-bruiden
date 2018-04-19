@@ -11,16 +11,30 @@
         Response.Redirect("Error.cshtml?action=403");
     }
 
-    string wishlistId = controller.GetLoggedInUserWishList(Authenication.LoginName);
-    bool hasWishlist = !string.IsNullOrEmpty(wishlistId);
+    List<Item> Items = null;
+    string wishlistCode = controller.GetLoggedInUserWishList(Authenication.LoginName);
+    bool hasWishlist = !string.IsNullOrEmpty(wishlistCode);
+
+    if(hasWishlist)
+    {
+        Items = controller.GetWishlistItems(wishlistCode);
+    }
 }
 
 <div class="main-content col-md-8 offset-md-2">
     <div class="col-md-12">
         <div class="row">
             @RenderPage("~/Partials/Wishlist/_Code.cshtml", new {
-                HasWishlist = hasWishlist,
-                WishlistCode = wishlistId
+           HasWishlist = hasWishlist,
+           WishlistCode = wishlistCode
+       })
+        </div>
+
+        <br/>
+
+        <div class="row">
+            @RenderPage("~/Partials/Wishlist/_Items.cshtml", new {
+                Items = Items,
             })
         </div>
     </div>
