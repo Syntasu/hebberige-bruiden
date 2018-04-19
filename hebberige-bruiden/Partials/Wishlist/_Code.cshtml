@@ -11,11 +11,16 @@
             string code =  Page.HasWishlist ? Page.WishlistCode : "????????";
         }
 
-        <input id="code-input" class="form-control" type="text" value="@code" readonly/>
+        <input id="code-input" class="form-control" type="text" value="@code"/>
  
         @if(!Page.HasWishlist)
         {
+            <p id="code-txt"> Click the create button to make a new wishlist!</p>
             <a id="code-btn" href="~/CreateWishlist.cshtml" class="btn btn-large btn-success">Create!</a>
+        }
+        else
+        {
+            <p id="code-txt"> Share the code above with the people that are invited.</p>
         }
     </div>
 

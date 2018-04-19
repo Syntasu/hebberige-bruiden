@@ -114,6 +114,20 @@ public class UserModel : BaseModel
         }
     }
 
+    public void UpdateUserWishlist(User user, string code)
+    {
+        Database db = RequestDB();
+
+        try
+        {
+            string query = "UPDATE users SET wishlist=@1 FROM users WHERE name=@0";
+            db.Execute(query, user.Name, code);
+        }
+        finally
+        {
+            db.Dispose();
+        }
+    }
 
 
     public bool HasUser(User user)

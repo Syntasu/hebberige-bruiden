@@ -12,5 +12,15 @@
         return userModel.GetUserWishList(user);
     }
 
-    public bool Create
+    public bool CreateWhiteList(string name)
+    {
+        User user = new User()
+        {
+            Name = name
+        };
+
+        userModel.UpdateUserWishlist(user, CodeGenerator.GenerateCode(8));
+
+        return true;
+    }
 }

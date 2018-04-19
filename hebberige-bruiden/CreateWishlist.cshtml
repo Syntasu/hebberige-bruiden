@@ -1,4 +1,11 @@
 ﻿@{ 
+    WishlistController controller = new WishlistController();
 
+    if (!Authenication.LoggedIn)
+    {
+        Response.Redirect("Error.cshtml?action=403");
+    }
 
+    controller.CreateWhiteList(Authenication.LoginName);
+    Response.Redirect("Wishlist.cshtml");
 }
