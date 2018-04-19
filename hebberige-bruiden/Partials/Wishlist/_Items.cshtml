@@ -1,26 +1,32 @@
 ﻿<div class="container col-md-12">
-    <div class="row">
-        <h2> Wishlist items </h2>
-    </div>
+    @if (Page.Items != null)
+    {
+        <div class="row">
+            <h2> Wishlist items </h2>
+        </div>
 
-    <ul id="sortable" class="list-unstyled">
-        @if(Page.Items != null)
-        {
-            foreach(Item item in Page.Items)
+        <ul id="sortable" class="list-unstyled">
+
+            @if(Page.Items.Count == 0)
             {
-                <li>
-                    <div class="container item-entry">
-                        <div class="row">
-                            <h3>@item.ItemName</h3>
-                        </div>
-
-                        <div class="row">
-                            <p>@item.ItemDesc</p>
-                            <p> @item.ItemPrice euro </p>
-                        </div>
-                    </div>
-                </li>
+                <p> Looks like you don't have items yet! </p>
             }
-        }
-    </ul>
-</div>
+
+            @foreach(Item item in Page.Items)
+            {
+            <li>
+                <div class="container item-entry">
+                    <div class="row">
+                        <h3>@item.ItemName</h3>
+                    </div>
+
+                    <div class="row">
+                        <p class="col-md-9">@item.ItemDesc</p>
+                        <p class="col-md-3"> <b>@item.ItemPrice euro </b></p>
+                    </div>
+                </div>
+            </li>
+            }
+        </ul>
+    }
+ </div>
