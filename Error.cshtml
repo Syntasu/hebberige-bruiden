@@ -19,6 +19,17 @@
             {
                 <p>It seems you are already logged in, this means you cannot create a new account or login again, please hit the <a href="~/Logout.cshtml">logout</a> button to do so.</p>
             }
+
+            @if (action == "403")
+            {
+                <p>You lack the permissions to view this page, are you logged in?</p>
+            }
+
+            
+            @if (action == "500")
+            {
+                <p>Oops, internal server error, please contact the server administrator.</p>
+            }
         </div>
     </div>
 </div>

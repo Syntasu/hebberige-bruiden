@@ -90,8 +90,31 @@ public class UserModel : BaseModel
         {
             db.Dispose();
         }
-
     }
+
+    public string GetUserWishList(User user)
+    {
+        Database db = RequestDB();
+
+        try
+        {
+            string query = "SELECT wishlist FROM users WHERE name=@0";
+            dynamic result = db.Query(query, user.Name);
+
+            if (result.Count < 1)
+            {
+                return null;
+            }
+
+            return result[0]["wishlist"];
+        }
+        finally
+        {
+            db.Dispose();
+        }
+    }
+
+
 
     public bool HasUser(User user)
     {
