@@ -16,7 +16,7 @@
                 if(Page.Title == link.Item1)
                 {
                      <li class="nav-item active nav-links">
-                         <a class="nav-link" href="#">
+                         <a class="nav-link" href="@link.Item2">
                              <i class="fas @link.Item3"></i>
                              @link.Item1
                          </a>
@@ -25,7 +25,7 @@
                 else
                 {
                      <li class="nav-item nav-links">
-                         <a class="nav-link" href="#" align="center">
+                         <a class="nav-link" href="@link.Item2" align="center">
                              <i class="fas @link.Item3"></i>
                              @link.Item1
                          </a>
@@ -44,13 +44,13 @@
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item nav-links">
-                <a class="nav-link" href="#" align="center">
+                <a class="nav-link" href="~/Login.cshtml" align="center">
                     <i class="fas fa-sign-in-alt"></i>
                     Login
                 </a>
             </li>
             <li class="nav-item nav-links">
-                <a class="nav-link" href="#" align="center">
+                <a class="nav-link" href="~/Register.cshtml" align="center">
                     <i class="fas fa-plus"></i>
                     Register
                 </a>
