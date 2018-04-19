@@ -74,6 +74,11 @@ public class UserModel : BaseModel
             string query = "SELECT password, password_salt FROM users WHERE name=@0";
             dynamic result = db.Query(query, user.Name);
 
+            if(result.Count < 1)
+            {
+                return null;
+            }
+
             return new User()
             {
                 Name = user.Name,

@@ -19,7 +19,7 @@
 
     if(Authenication.LoggedIn)
     {
-        HttpContext.Current.Response.Redirect("Success.cshtml?action=already_loggedin");
+        HttpContext.Current.Response.Redirect("Error.cshtml?action=already_loggedin");
     }
 
     if (IsPost)
