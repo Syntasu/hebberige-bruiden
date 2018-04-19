@@ -10,16 +10,27 @@
             {
                 "container",
                 "fill",
-                 "col-xs-" + Page.ContentWidth,
+                 "col-md-" + Page.ContentWidth,
             };
         }
         <div id="content" class="@String.Join(" ", classes)">
 
-            @RenderPage("~/Partials/_Banner.cshtml")
-            @RenderPage("~/Partials/_Navbar.cshtml")
+            <div class="row flex-banner">
+                @RenderPage("~/Partials/_Banner.cshtml")
+            </div>
 
+            <div class="row flex-navbar">
+                @RenderPage("~/Partials/_Navbar.cshtml")
+            </div>
 
-            @RenderBody()
+            <div class="row flex-content">
+                @RenderBody()
+            </div>
+
+            <div class="row flex-footer">
+                @RenderPage("~/Partials/_Footer.cshtml")
+            </div>
+
         </div>
     </body>
 </html>

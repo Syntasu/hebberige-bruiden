@@ -1,11 +1,11 @@
-﻿@bodyColor: #fcedd1;
+﻿@bodyColor: #f7fff7;
+@contentColor: #f7fff7;
+@contentBorderColor: #abf2ab;
+@headerTextColor: #39ec16;
+@navigationHoverColor: #007823;
 
-@contentColor: #fff0d7;
-@contentBorderColor: #f2d8af;
-
-@headerTextColor: #ffa200;
-
-body {
+body
+{
     background-color: @bodyColor;
 
     h1, h2, h3, h4, h5, p 
@@ -14,22 +14,66 @@ body {
     }
 }
 
-html, body
+html, body 
 {
     height: 100%;
+    margin: 0
 }
 
-#content {
-    padding: 0;
-    height: 100%;
+#content 
+{
+    display: flex;
+    flex-flow: column;
+    height: auto;
+
     background-color: @contentColor;
-
     border-style: solid;
-    border-width: 0px 10px 0px 10px;
+    border-width: 0px 10px 10px 10px;
     border-color: @contentBorderColor;
+
+    .flex-banner 
+    {
+        flex-grow: 0;
+        flex-shrink: 1;
+        flex-basis: 200px;
+    }
+
+    .flex-navbar 
+    {
+        flex-grow: 0;
+        flex-shrink: 1;
+        flex-basis: auto;
+    }
+
+    .flex-content
+    {
+        flex-grow: 1;
+        flex-shrink: 0;
+        flex-basis: auto;
+    }
+
+    .flex-footer
+    {
+        flex-grow: 0;
+        flex-shrink: 1;
+        flex-basis: 40px;
+    }
 }
 
-.fill {
+#footer 
+{
+    width: 100%;
+    background-color: #dfffdf;
+
+    p 
+    {
+        font-size: 12px;
+        margin-top: 25px;
+    }
+}
+
+.fill 
+{
     min-height: 100%;
     height: 100%;
 }
@@ -38,6 +82,8 @@ html, body
 #banner 
 {
     padding: 0;
+
+    width: 100%;
     height: 200px;
 
     background-image: url("../Assets/banner.jpg");
@@ -48,30 +94,36 @@ html, body
     h1
     {
         color: @headerTextColor;
-        font-weight: lighter;
+        font-weight: normal;
         padding-top: 70px;
         background-color: rgba(0,0,0,0.5);
     }
 }
 
 
-nav {
+nav 
+{
+    width: 100%;
     background-color: @contentBorderColor !important;
 
-    .nav-link {
+    .nav-link 
+    {
         color: black !important;
     }
 
-    .nav-link:hover {
-        color: @headerTextColor !important;
+    .nav-link:hover 
+    {
+        color: @navigationHoverColor !important;
     }
 
-    .navbar-toggler-icon {
+    .navbar-toggler-icon 
+    {
         background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
     }
+}
 
-    .nav-links
-    {
-        min-width: 94px;
-    }
+.main-content
+{
+    padding-top: 33px;
+    padding-bottom: 33px;
 }
