@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Web;
-using System.Web.Helpers;
 
 public class RegisterController : BaseController
 {
-    private UserModel Users = new UserModel();
+    private UserModel userModel = new UserModel();
 
     public List<string> RegisterUser(string name, string password)
     {
@@ -16,7 +15,7 @@ public class RegisterController : BaseController
             Password = password
         };
 
-        RegisterState state = Users.AddUser(user);
+        RegisterState state = userModel.AddUser(user);
 
         switch (state)
         {
@@ -25,9 +24,9 @@ public class RegisterController : BaseController
                 break;
             case RegisterState.Unknown:
 
-                if (Users.HasError && InDebug)
+                if (userModel.HasError && InDebug)
                 {
-                    HttpContext.Current.Response.Write(Users.GetErrorMessage());
+                    HttpContext.Current.Response.Write(userModel.GetErrorMessage());
                 }
                 else
                 {

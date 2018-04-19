@@ -7,4 +7,9 @@ public class User
     public string Password { get; set; }
     public string PasswordSalt { get; set; }
     public DateTime RegisterDate { get; set; }
+
+    public void Merge(User user)
+    {
+
+    }
 }

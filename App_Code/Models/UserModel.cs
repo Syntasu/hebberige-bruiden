@@ -52,7 +52,41 @@ public class UserModel : BaseModel
         return RegisterState.OK;
     }
 
+    public bool CheckUserCredentials(User user)
+    {
+        User fetchedUser = GetUserPasswordAndSalt(user);
+        
+        if(fetchedUser != null)
+        {
+            return Encryptor.CheckPassword(user.Password, fetchedUser.Password, fetchedUser.PasswordSalt);
+        }
 
+        return false;
+
+    }
+
+    public User GetUserPasswordAndSalt(User user)
+    {
+        Database db = RequestDB();
+
+        try
+        {
+            string query = "SELECT password, password_salt FROM users WHERE name=@0";
+            dynamic result = db.Query(query, user.Name);
+
+            return new User()
+            {
+                Name = user.Name,
+                Password = result[0]["password"],
+                PasswordSalt = result[0]["password_salt"],
+            };
+        }
+        finally
+        {
+            db.Dispose();
+        }
+
+    }
 
     public bool HasUser(User user)
     {
