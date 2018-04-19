@@ -1,9 +1,11 @@
 ﻿@{
     //Make a dictionary of all the navigation links. Based on the login state.
-    List<Tuple<string, string, string>> navigationLinks = new List<Tuple<string, string, string>>();
-
-    navigationLinks.Add(new Tuple<string, string, string>("Home", Href("~/Index.cshtml"), "fa-home"));
-    navigationLinks.Add(new Tuple<string, string, string>("Wishlist", Href("~/Wishlist.cshtml"), "fa-star"));
+    List<NavLink> navigationLinks = new List<NavLink>();
+    navigationLinks.Add(new NavLink("Home", "Index.cshtml", "fa-home", NavLinkAlignment.Left, NavLinkShow.Always));
+    navigationLinks.Add(new NavLink("Wishlist", "Wishlist.cshtml", "fa-star", NavLinkAlignment.Left, NavLinkShow.Always));
+    navigationLinks.Add(new NavLink("Login", "Login.cshtml", "fa-sign-in-alt", NavLinkAlignment.Right, NavLinkShow.LoggedOut));
+    navigationLinks.Add(new NavLink("Logout", "Logout.cshtml", "fa-sign-out-alt", NavLinkAlignment.Right, NavLinkShow.LoggedIn));
+    navigationLinks.Add(new NavLink("Register", "Register.cshtml", "fa-plus", NavLinkAlignment.Right, NavLinkShow.LoggedOut));
 }
 
 <nav class="navbar navbar-expand-md ">
@@ -11,23 +13,29 @@
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
 
-            @foreach(var link in navigationLinks)
+            @foreach (NavLink link in navigationLinks)
             {
-                if(Page.Title == link.Item1)
+                if (link.Alignnment != NavLinkAlignment.Left ||
+                    !link.ShouldShow(Authenication.LoggedIn))
+                {
+                    continue;
+                }
+
+                if (Page.Title == link.Name)
                 {
                      <li class="nav-item active nav-links">
-                         <a class="nav-link" href="@link.Item2">
-                             <i class="fas @link.Item3"></i>
-                             @link.Item1
+                         <a class="nav-link" href="@link.Href">
+                             <i class="fas @link.Icon"></i>
+                             @link.Name
                          </a>
                     </li>
                 }
                 else
                 {
                      <li class="nav-item nav-links">
-                         <a class="nav-link" href="@link.Item2" align="center">
-                             <i class="fas @link.Item3"></i>
-                             @link.Item1
+                         <a class="nav-link" href="@link.Href" align="center">
+                             <i class="fas @link.Icon"></i>
+                             @link.Name
                          </a>
                     </li>
                 }
@@ -43,18 +51,22 @@
 
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item nav-links">
-                <a class="nav-link" href="~/Login.cshtml" align="center">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Login
-                </a>
-            </li>
-            <li class="nav-item nav-links">
-                <a class="nav-link" href="~/Register.cshtml" align="center">
-                    <i class="fas fa-plus"></i>
-                    Register
-                </a>
-            </li>
+
+           @foreach (NavLink link in navigationLinks)
+           {
+               if (link.Alignnment != NavLinkAlignment.Right ||
+                   !link.ShouldShow(Authenication.LoggedIn))
+               {
+                   continue;
+               }
+
+                <li class="nav-item nav-links">
+                    <a class="nav-link" href="@link.Href" align="center">
+                        <i class="fas @link.Icon"></i>
+                        @link.Name
+                    </a>
+                </li>
+           }
         </ul>
     </div>
 </nav>
