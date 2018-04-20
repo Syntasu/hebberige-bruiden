@@ -7,6 +7,7 @@
     Layout = "~/Layouts/_DefaultLayout.cshtml";
 
     List<Item> Items = null;
+    List<Item> BoughtItems = null;
     string wishlistCode = "";
     bool hasWishlist = false;
     bool isWishlistOwner = false;
@@ -19,12 +20,13 @@
         {
             string code = controller.GetLoggedInUserWishList(Authenication.LoginName);
             isWishlistOwner = code == wishlistCode;
-            Items = controller.GetWishlistItems(wishlistCode, true);
 
+            Items = controller.GetWishlistItems(wishlistCode);
+            BoughtItems = controller.GetWishlistBoughtItems(wishlistCode);
         }
         else
         {
-            Items = controller.GetWishlistItems(wishlistCode, false);
+            Items = controller.GetWishlistItems(wishlistCode);
         }
     }
     else
@@ -36,7 +38,8 @@
 
             if (hasWishlist)
             {
-                Items = controller.GetWishlistItems(wishlistCode, true);
+                Items = controller.GetWishlistItems(wishlistCode);
+                BoughtItems = controller.GetWishlistBoughtItems(wishlistCode);
             }
 
             isWishlistOwner = true;
@@ -65,13 +68,17 @@
             </div>
         }
 
-        <div class="row">
-            @RenderPage("~/Partials/Wishlist/_Items.cshtml", new
-            {
-                Items = Items,
-                WishlistCode = wishlistCode,
-                IsWishlistOwner = isWishlistOwner
-            })
-        </div>
+        @if (hasWishlist)
+        {
+            <div class="row">
+                @RenderPage("~/Partials/Wishlist/_Items.cshtml", new
+                {
+                    Items = Items,
+                    BoughtItems = BoughtItems,
+                    WishlistCode = wishlistCode,
+                    IsWishlistOwner = isWishlistOwner
+                })
+            </div>
+        }
     </div>
 </div>

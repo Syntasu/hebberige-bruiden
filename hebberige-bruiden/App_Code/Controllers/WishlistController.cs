@@ -99,8 +99,13 @@ public class WishlistController : BaseController
         return wishlistModel.BuyFromWishlist(code, item);
     }
 
-    public List<Item> GetWishlistItems(string code, bool includeBought)
+    public List<Item> GetWishlistBoughtItems(string code)
     {
-        return wishlistModel.GetWishlistItems(code, includeBought);
+        return wishlistModel.GetBoughtItems(code);
+    }
+
+    public List<Item> GetWishlistItems(string code)
+    {
+        return wishlistModel.GetWishlistItems(code);
     }
 }

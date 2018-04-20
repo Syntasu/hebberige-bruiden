@@ -8,7 +8,7 @@
         @if (Page.Items == null ||
             Page.Items.Count == 0)
         {
-            <p> Looks like you don't have items yet! </p>
+            <p> Looks like there are not items </p>
         }
         else
         {
@@ -26,18 +26,18 @@
                         </div>
 
                         <div class="row">
-                            @if (Page.Items[0] != item)
-                            {
-                                <a class="btn btn-info item-btn" href="~/WishlistActions.cshtml?action=addPriority&id=@item.Id&name=@item.ItemName&code=@Page.WishlistCode">Move up</a>
-                            }
-
-                            @if (Page.Items[Page.Items.Count - 1] != item)
-                            {
-                                <a class="btn btn-info item-btn" href="~/WishlistActions.cshtml?action=removePriority&id=@item.Id&name=@item.ItemName&code=@Page.WishlistCode">Move down</a>
-                            }
-
                             @if (Page.IsWishlistOwner)
                             {
+                                if (Page.Items[0] != item)
+                                {
+                                    <a class="btn btn-info item-btn" href="~/WishlistActions.cshtml?action=addPriority&id=@item.Id&name=@item.ItemName&code=@Page.WishlistCode">Move up</a>
+                                }
+
+                                if (Page.Items[Page.Items.Count - 1] != item)
+                                {
+                                    <a class="btn btn-info item-btn" href="~/WishlistActions.cshtml?action=removePriority&id=@item.Id&name=@item.ItemName&code=@Page.WishlistCode">Move down</a>
+                                }
+
                                 <a class="btn btn-danger item-btn" href="~/WishlistActions.cshtml?action=deleteItem&id=@item.Id&name=@item.ItemName&code=@Page.WishlistCode">Delete</a>
                             }
                             else
@@ -51,4 +51,38 @@
             }
         }
     </ul>
- </div>
+
+    @if (Page.IsWishlistOwner)
+    {
+        <div class="row">
+            <h3> Bought wishlist items </h3>
+        </div>
+
+        <ul id="sortable" class="list-unstyled">
+
+            @if (Page.BoughtItems == null ||
+            Page.BoughtItems.Count == 0)
+            {
+                <p> Looks like no one bought your items :(</p>
+            }
+            else
+            {
+                foreach (Item item in Page.BoughtItems)
+                {
+                    <li>
+                        <div class="container item-entry">
+                            <div class="row">
+                                <h3>@item.ItemName</h3>
+                            </div>
+
+                            <div class="row">
+                                <p class="col-md-9">@item.ItemDesc</p>
+                                <p class="col-md-3"> <b>@item.ItemPrice euro </b></p>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+    }
+</div>
