@@ -5,29 +5,50 @@
 
     <ul id="sortable" class="list-unstyled">
 
-        @if(Page.Items.Count == 0)
+        @if (Page.Items == null ||
+            Page.Items.Count == 0)
         {
             <p> Looks like you don't have items yet! </p>
         }
-
-        @foreach(Item item in Page.Items)
+        else
         {
-        <li>
-            <div class="container item-entry">
-                <div class="row">
-                    <h3>@item.ItemName</h3>
-                </div>
+            foreach (Item item in Page.Items)
+            {
+                <li>
+                    <div class="container item-entry">
+                        <div class="row">
+                            <h3>@item.ItemName</h3>
+                        </div>
 
-                <div class="row">
-                    <p class="col-md-9">@item.ItemDesc</p>
-                    <p class="col-md-3"> <b>@item.ItemPrice euro </b></p>
-                </div>
+                        <div class="row">
+                            <p class="col-md-9">@item.ItemDesc</p>
+                            <p class="col-md-3"> <b>@item.ItemPrice euro </b></p>
+                        </div>
 
-                <div class="row">
-                    <a class="btn btn-danger" href="~/WishlistActions.cshtml?action=deleteItem&id=@item.Id&name=@item.ItemName&code=@Page.WishlistCode">Delete</a>
-                </div>
-            </div>
-        </li>
+                        <div class="row">
+                            @if (Page.Items[0] != item)
+                            {
+                                <a class="btn btn-info item-btn" href="~/WishlistActions.cshtml?action=addPriority&id=@item.Id&name=@item.ItemName&code=@Page.WishlistCode">Move up</a>
+                            }
+
+                            @if (Page.Items[Page.Items.Count - 1] != item)
+                            {
+                                <a class="btn btn-info item-btn" href="~/WishlistActions.cshtml?action=removePriority&id=@item.Id&name=@item.ItemName&code=@Page.WishlistCode">Move down</a>
+                            }
+
+                            @if (Page.IsWishlistOwner)
+                            {
+                                <a class="btn btn-danger item-btn" href="~/WishlistActions.cshtml?action=deleteItem&id=@item.Id&name=@item.ItemName&code=@Page.WishlistCode">Delete</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-success item-btn" href="~/WishlistActions.cshtml?action=buy&id=@item.Id&name=@item.ItemName&code=@Page.WishlistCode">Buy</a>
+                            }
+
+                        </div>
+                    </div>
+                </li>
+            }
         }
     </ul>
  </div>

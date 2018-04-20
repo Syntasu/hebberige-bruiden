@@ -66,8 +66,41 @@ public class WishlistController : BaseController
         return false;
     }
 
-    public List<Item> GetWishlistItems(string code)
+    public bool AddPriority(string code, string id, string itemName)
     {
-        return wishlistModel.GetWishlistItems(code);
+        Item item = new Item()
+        {
+            Id = int.Parse(id),
+            ItemName = itemName
+        };
+
+        return wishlistModel.AddPriority(code, item);
+    }
+
+    public bool RemovePriority(string code, string id, string itemName)
+    {
+        Item item = new Item()
+        {
+            Id = int.Parse(id),
+            ItemName = itemName
+        };
+
+        return wishlistModel.RemovePriority(code, item);
+    }
+
+    public bool BuyFromWishlist(string code, string id, string itemName)
+    {
+        Item item = new Item()
+        {
+            Id = int.Parse(id),
+            ItemName = itemName
+        };
+
+        return wishlistModel.BuyFromWishlist(code, item);
+    }
+
+    public List<Item> GetWishlistItems(string code, bool includeBought)
+    {
+        return wishlistModel.GetWishlistItems(code, includeBought);
     }
 }

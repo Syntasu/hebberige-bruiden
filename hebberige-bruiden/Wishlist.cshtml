@@ -6,18 +6,41 @@
 
     Layout = "~/Layouts/_DefaultLayout.cshtml";
 
-    if(!Authenication.LoggedIn)
-    {
-        Response.Redirect("Error.cshtml?action=403");
-    }
-
     List<Item> Items = null;
-    string wishlistCode = controller.GetLoggedInUserWishList(Authenication.LoginName);
-    bool hasWishlist = !string.IsNullOrEmpty(wishlistCode);
+    string wishlistCode = "";
+    bool hasWishlist = false;
+    bool isWishlistOwner = false;
 
-    if(hasWishlist)
+    if (!string.IsNullOrEmpty(Request.Params["code"]))
     {
-        Items = controller.GetWishlistItems(wishlistCode);
+        wishlistCode = Request.Params["code"];
+        hasWishlist = !string.IsNullOrEmpty(wishlistCode);
+        if (Authenication.LoggedIn)
+        {
+            string code = controller.GetLoggedInUserWishList(Authenication.LoginName);
+            isWishlistOwner = code == wishlistCode;
+            Items = controller.GetWishlistItems(wishlistCode, true);
+
+        }
+        else
+        {
+            Items = controller.GetWishlistItems(wishlistCode, false);
+        }
+    }
+    else
+    {
+        if (Authenication.LoggedIn)
+        {
+            wishlistCode = controller.GetLoggedInUserWishList(Authenication.LoginName);
+            hasWishlist = !string.IsNullOrEmpty(wishlistCode);
+
+            if (hasWishlist)
+            {
+                Items = controller.GetWishlistItems(wishlistCode, true);
+            }
+
+            isWishlistOwner = true;
+        }
     }
 }
 
@@ -32,21 +55,23 @@
 
         <br/>
 
-        @if (hasWishlist)
+        @if (isWishlistOwner)
         {
             <div class="row">
-                @RenderPage("~/Partials/Wishlist/_Controls.cshtml", new {
-                    WishlistCode = wishlistCode
-                });
+                @RenderPage("~/Partials/Wishlist/_Controls.cshtml", new
+               {
+                   WishlistCode = wishlistCode
+               });
             </div>
-
-            <div class="row">
-                @RenderPage("~/Partials/Wishlist/_Items.cshtml", new
-                {
-                    Items = Items,
-                    WishlistCode = wishlistCode
-                })
-        </div>
         }
+
+        <div class="row">
+            @RenderPage("~/Partials/Wishlist/_Items.cshtml", new
+            {
+                Items = Items,
+                WishlistCode = wishlistCode,
+                IsWishlistOwner = isWishlistOwner
+            })
+        </div>
     </div>
 </div>

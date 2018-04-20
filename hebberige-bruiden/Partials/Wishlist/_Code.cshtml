@@ -17,21 +17,26 @@
             string code = Page.HasWishlist ? Page.WishlistCode : "????????";
         }
 
-        <form method="get" class="col-md-12">
-            <input name="wl" id="code-input" class="form-control" type="text" value="@code" maxlength="8"/>'
-            @if (!Page.HasWishlist)
+        <form method="GET" class="col-md-12" action="~/Wishlist.cshtml?action=visit">
+            <input name="code" id="code-input" class="form-control" type="text" value="@code" maxlength="8"/>'
+            @if (Authenication.LoggedIn && !Page.HasWishlist)
             {
                 <a id="code-btn" href="~/WishlistActions.cshtml?action=createWishlist" class="btn btn-large btn-success">Create!</a>
             }
+
             &nbsp;
             <button id="code-btn" class="btn btn-success" type="submit">Visit</button>
         </form>
 
-        @if (!Page.HasWishlist)
+        @if (!Authenication.LoggedIn)
         {
+            <p id="code-txt">Enter a unique code to visit the wishlist.</p>
+        }
+        else if(Authenication.LoggedIn)
+        { 
             <p id="code-txt"> Click the create button to make a new wishlist!</p>
         }
-        else
+        else if(Page.HasWishlist)
         {
             <p id="code-txt"> Share the code above with the people that are invited.</p>
         }

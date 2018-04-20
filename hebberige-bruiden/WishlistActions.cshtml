@@ -2,9 +2,12 @@
     string action = (string)Request.Params["action"];
     WishlistController controller = new WishlistController();
 
+    string paramCode = Request.Params["code"];
+    string paramItemId = Request.Params["id"];
+    string paramItemName = Request.Params["name"];
+
     if (action == "createWishlist")
     {
-
         if (!Authenication.LoggedIn)
         {
             Response.Redirect("Error.cshtml?action=403");
@@ -12,7 +15,7 @@
 
         controller.CreateWhiteList(Authenication.LoginName);
     }
-    else if(action == "addItem")
+    else if (action == "addItem")
     {
         string itemName = Request.Form.Get(0);
         string itemDesc = Request.Form.Get(1);
@@ -24,19 +27,42 @@
 
         bool result = controller.AddToWishList(code, itemName, itemDesc, price);
 
-        if(!result)
+        if (!result)
         {
             Response.Redirect("Error.cshtml?action=500");
         }
 
     }
-    else if(action == "deleteItem")
+    else if (action == "deleteItem")
     {
-        string code = Request.Params["code"];
-        string itemId = Request.Params["id"];
-        string itemName = Request.Params["name"];
+        bool result = controller.RemoveFromWishlist(paramCode, paramItemId, paramItemName);
 
-        bool result = controller.RemoveFromWishlist(code, itemId, itemName);
+        if (!result)
+        {
+            Response.Redirect("Error.cshtml?action=500");
+        }
+    }
+    else if (action == "addPriority")
+    {
+        bool result = controller.AddPriority(paramCode, paramItemId, paramItemName);
+
+        if (!result)
+        {
+            Response.Redirect("Error.cshtml?action=500");
+        }
+    }
+    else if (action == "removePriority")
+    {
+        bool result = controller.RemovePriority(paramCode, paramItemId, paramItemName);
+
+        if (!result)
+        {
+            Response.Redirect("Error.cshtml?action=500");
+        }
+    }
+    else if(action == "buy")
+    {
+        bool result = controller.BuyFromWishlist(paramCode, paramItemId, paramItemName);
 
         if (!result)
         {
@@ -44,5 +70,12 @@
         }
     }
 
-    Response.Redirect("Wishlist.cshtml");
+    if (string.IsNullOrEmpty(paramCode))
+    {
+        Response.Redirect("Wishlist.cshtml");
+    }
+    else
+    {
+        Response.Redirect("Wishlist.cshtml?code=" + paramCode);
+    }
 }

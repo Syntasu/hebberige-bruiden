@@ -7,7 +7,7 @@ using System;
 /// </summary>
 public class WishlistItemsModel : BaseModel
 {
-    public List<Item> GetWishlistItems(string code)
+    public List<Item> GetWishlistItems(string code, bool includeBought)
     {
         Database db = RequestDB();
 
@@ -15,11 +15,25 @@ public class WishlistItemsModel : BaseModel
         {
             List<Item> items = new List<Item>();
 
-            string query = @"SELECT i.item_name, i.item_price, i.item_desc, wl.item, wl.is_bought, wl.priority
+            string query = "";
+
+            if(includeBought)
+            {
+                query = @"SELECT i.item_name, i.item_price, i.item_desc, wl.item, wl.is_bought, wl.priority
                             FROM items as i, wishlist_items as wl
                             INNER JOIN items ON wl.item = items.id
                             WHERE i.id = wl.item AND wl.wishlist = @0
                             ORDER BY wl.priority DESC";
+            }
+
+            else
+            {
+                query = @"SELECT i.item_name, i.item_price, i.item_desc, wl.item, wl.is_bought, wl.priority
+                            FROM items as i, wishlist_items as wl
+                            INNER JOIN items ON wl.item = items.id
+                            WHERE i.id = wl.item AND wl.wishlist = @0 AND wl.is_bought =0
+                            ORDER BY wl.priority DESC";
+            }
 
             dynamic result = db.Query(query, code);
 
@@ -79,4 +93,56 @@ public class WishlistItemsModel : BaseModel
             db.Dispose();
         }
     }
+
+    public bool AddPriority(string code, Item item)
+    {
+        Database db = RequestDB();
+
+        try
+        {
+            string query = "UPDATE wishlist_items SET priority = priority + 1 WHERE item=@0 AND wishlist=@1";
+            int affected = db.Execute(query, item.Id, code);
+
+            return affected > 0;
+        }
+        finally
+        {
+            db.Dispose();
+        }
+    }
+
+    public bool RemovePriority(string code, Item item)
+    {
+        Database db = RequestDB();
+
+        try
+        {
+            string query = "UPDATE wishlist_items SET priority = priority - 1 WHERE item=@0 AND wishlist=@1";
+            int affected = db.Execute(query, item.Id, code);
+
+            return affected > 0;
+        }
+        finally
+        {
+            db.Dispose();
+        }
+    }
+
+    public bool BuyFromWishlist(string code, Item item)
+    {
+        Database db = RequestDB();
+
+        try
+        {
+            string query = "UPDATE wishlist_items SET is_bought = 1 WHERE item=@0 AND wishlist=@1";
+            int affected = db.Execute(query, item.Id, code);
+
+            return affected > 0;
+        }
+        finally
+        {
+            db.Dispose();
+        }
+    }
+
 }
