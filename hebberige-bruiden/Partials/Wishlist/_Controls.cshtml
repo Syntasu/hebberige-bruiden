@@ -1,0 +1,23 @@
+﻿<h3> Add new item</h3>
+
+<form class="default-form" method="post" action="~/WishlistActions.cshtml?action=addItem">
+    <div class="form-group">
+        <label class="form-label" for="item-name">Item name</label>
+        <input name="item-name" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label" for="item-desc">Item description</label>
+        <textarea cols="10" rows="5" name="item-desc" class="form-control" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label" for="item-price">Item price</label>
+        <input type="number" step="any" name="item-prive" class="form-control" required>
+    </div>
+    <input type="hidden" name="code" class="form-control" value="@Page.WishlistCode">
+    <button type="submit" class="btn btn-success">Add item</button>
+</form>
+<br/>
+<br />
+<br />

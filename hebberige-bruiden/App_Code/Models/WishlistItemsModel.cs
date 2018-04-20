@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using WebMatrix.Data;
+using System;
 
 /// <summary>
 /// Summary description for WishItems
@@ -38,6 +39,23 @@ public class WishlistItemsModel : BaseModel
             }
 
             return items;
+        }
+        finally
+        {
+            db.Dispose();
+        }
+    }
+
+    public bool AddItemToWishlist(string code, Item item)
+    {
+        Database db = RequestDB();
+
+        try
+        {
+            string query = "INSERT INTO wishlist_items VALUES (@0, @1, @2, @3)";
+            int affected = db.Execute(query, item.Id, code, false, 0);
+
+            return affected > 0;
         }
         finally
         {

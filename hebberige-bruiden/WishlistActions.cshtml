@@ -1,0 +1,27 @@
+﻿@{ 
+    string action = (string)Request.Params["action"];
+    WishlistController controller = new WishlistController();
+
+    if (action == "createWishlist")
+    {
+
+        if (!Authenication.LoggedIn)
+        {
+            Response.Redirect("Error.cshtml?action=403");
+        }
+
+        controller.CreateWhiteList(Authenication.LoginName);
+    }
+    else if(action == "addItem")
+    {
+        string itemName = Request.Form.Get(0);
+        string itemDesc = Request.Form.Get(1);
+        double itemPrice = double.Parse(Request.Form.Get(2));
+        string code = Request.Form.Get(3);
+
+        bool result = controller.AddToWishList(code, itemName, itemDesc, itemPrice);
+
+    }
+
+    Response.Redirect("Wishlist.cshtml");
+}

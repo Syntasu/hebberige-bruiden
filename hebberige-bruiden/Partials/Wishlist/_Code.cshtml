@@ -21,7 +21,7 @@
             <input name="wl" id="code-input" class="form-control" type="text" value="@code" maxlength="8"/>'
             @if (!Page.HasWishlist)
             {
-                <a id="code-btn" href="~/CreateWishlist.cshtml" class="btn btn-large btn-success">Create!</a>
+                <a id="code-btn" href="~/WishlistActions.cshtml?action=createWishlist" class="btn btn-large btn-success">Create!</a>
             }
             &nbsp;
             <button id="code-btn" class="btn btn-success" type="submit">Visit</button>

@@ -4,6 +4,7 @@ public class WishlistController : BaseController
 {
     public UserModel userModel = new UserModel();
     public WishlistItemsModel wishlistModel = new WishlistItemsModel();
+    public ItemsModel itemModel = new ItemsModel();
 
     public string GetLoggedInUserWishList(string name)
     {
@@ -25,6 +26,26 @@ public class WishlistController : BaseController
         userModel.UpdateUserWishlist(user, CodeGenerator.GenerateCode(8));
 
         return true;
+    }
+
+    public bool AddToWishList(string code, string itemName, string desc, double price)
+    {
+        Item item = new Item
+        {
+            ItemName = itemName,
+            ItemDesc = desc,
+            ItemPrice = price
+        };
+
+        bool result = itemModel.AddItem(item);
+
+        if(result)
+        {
+            Item fetchedItem = itemModel.GetItem(item);
+            return wishlistModel.AddItemToWishlist(code, fetchedItem);
+        }
+
+        return false;
     }
 
     public List<Item> GetWishlistItems(string code)

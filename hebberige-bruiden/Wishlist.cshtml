@@ -32,10 +32,20 @@
 
         <br/>
 
-        <div class="row">
-            @RenderPage("~/Partials/Wishlist/_Items.cshtml", new {
-                Items = Items,
-            })
+        @if (hasWishlist)
+        {
+            <div class="row">
+                @RenderPage("~/Partials/Wishlist/_Controls.cshtml", new {
+                    WishlistCode = wishlistCode
+                });
+            </div>
+
+            <div class="row">
+                @RenderPage("~/Partials/Wishlist/_Items.cshtml", new
+               {
+                   Items = Items,
+               })
         </div>
+        }
     </div>
 </div>
