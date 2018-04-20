@@ -49,4 +49,22 @@ public class ItemsModel : BaseModel
             db.Dispose();
         }
     }
+
+    public bool RemoveItem(Item item)
+    {
+        Database db = RequestDB();
+
+        try
+        {
+            string query = @"DELETE FROM items WHERE id=@0 AND item_name=@1";
+            int result = db.Execute(query, item.Id, item.ItemName);
+
+
+            return result > 0;
+        }
+        finally
+        {
+            db.Dispose();
+        }   
+    }
 }

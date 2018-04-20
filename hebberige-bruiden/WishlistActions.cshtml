@@ -16,11 +16,32 @@
     {
         string itemName = Request.Form.Get(0);
         string itemDesc = Request.Form.Get(1);
-        double itemPrice = double.Parse(Request.Form.Get(2));
+        string itemPrice = Request.Form.Get(2);
         string code = Request.Form.Get(3);
 
-        bool result = controller.AddToWishList(code, itemName, itemDesc, itemPrice);
+        string priceCorrect = itemPrice.Replace(',', '.');
+        double price = Double.Parse(priceCorrect);
 
+        bool result = controller.AddToWishList(code, itemName, itemDesc, price);
+
+        if(!result)
+        {
+            Response.Redirect("Error.cshtml?action=500");
+        }
+
+    }
+    else if(action == "deleteItem")
+    {
+        string code = Request.Params["code"];
+        string itemId = Request.Params["id"];
+        string itemName = Request.Params["name"];
+
+        bool result = controller.RemoveFromWishlist(code, itemId, itemName);
+
+        if (!result)
+        {
+            Response.Redirect("Error.cshtml?action=500");
+        }
     }
 
     Response.Redirect("Wishlist.cshtml");

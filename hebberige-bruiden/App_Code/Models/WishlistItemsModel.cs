@@ -15,11 +15,11 @@ public class WishlistItemsModel : BaseModel
         {
             List<Item> items = new List<Item>();
 
-            string query = @"SELECT item_name, item_price, item_desc, item, is_bought, priority
-                            FROM wishlist_items
-                            INNER JOIN items ON wishlist_items.item = items.id
-                            WHERE wishlist_items.wishlist = @0
-                            ORDER BY priority DESC";
+            string query = @"SELECT i.item_name, i.item_price, i.item_desc, wl.item, wl.is_bought, wl.priority
+                            FROM items as i, wishlist_items as wl
+                            INNER JOIN items ON wl.item = items.id
+                            WHERE i.id = wl.item AND wl.wishlist = @0
+                            ORDER BY wl.priority DESC";
 
             dynamic result = db.Query(query, code);
 
@@ -54,6 +54,23 @@ public class WishlistItemsModel : BaseModel
         {
             string query = "INSERT INTO wishlist_items VALUES (@0, @1, @2, @3)";
             int affected = db.Execute(query, item.Id, code, false, 0);
+
+            return affected > 0;
+        }
+        finally
+        {
+            db.Dispose();
+        }
+    }
+
+    public bool RemoveItemFromWishlist(string code, Item item)
+    {
+        Database db = RequestDB();
+    
+        try
+        {
+            string query = "DELETE FROM wishlist_items WHERE item=@0 AND wishlist=@1";
+            int affected = db.Execute(query, item.Id, code);
 
             return affected > 0;
         }

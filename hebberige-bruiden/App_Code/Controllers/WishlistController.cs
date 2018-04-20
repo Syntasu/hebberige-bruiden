@@ -48,6 +48,24 @@ public class WishlistController : BaseController
         return false;
     }
 
+    public bool RemoveFromWishlist(string code, string id, string itemName)
+    {
+        Item item = new Item()
+        {
+            Id = int.Parse(id),
+            ItemName = itemName
+        };
+
+        bool result = itemModel.RemoveItem(item);
+
+        if(result)
+        {
+            return wishlistModel.RemoveItemFromWishlist(code, item);
+        }
+
+        return false;
+    }
+
     public List<Item> GetWishlistItems(string code)
     {
         return wishlistModel.GetWishlistItems(code);

@@ -22,6 +22,10 @@
                     <p class="col-md-9">@item.ItemDesc</p>
                     <p class="col-md-3"> <b>@item.ItemPrice euro </b></p>
                 </div>
+
+                <div class="row">
+                    <a class="btn btn-danger" href="~/WishlistActions.cshtml?action=deleteItem&id=@item.Id&name=@item.ItemName&code=@Page.WishlistCode">Delete</a>
+                </div>
             </div>
         </li>
         }
